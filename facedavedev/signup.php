@@ -1,7 +1,7 @@
 <?php
 
   session_start();
-  require 'vendor/autoload.php';
+  
   include 'config.php';
     
   $names = $_POST['names'];
@@ -22,7 +22,15 @@
         'gender'  => $gender,
         'birthdate'  => $birthdate,
         'dateRegistration'  => $dateRegistration,
-        'profilePicture'  => $profilePicture
+        'profilePicture'  => $profilePicture,
+        'publications'  => ['user' => 14, 'test' => 21, 
+                            'multimediaurl' => 'cm','coments' => 'cm',
+                            'likes' => 'cm', 'date' => 'cm',
+                            'read' => 'cm','typepublication' => 'cm'],
+       'friends'  => ['user' => 14, 'date' => 21,
+                      'status' => 'cm']
+          
+          
       ]
    );
   

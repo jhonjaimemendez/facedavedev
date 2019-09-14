@@ -1,6 +1,5 @@
 <?php
 
-session_start();
  
 function Headerb () 
 
@@ -20,6 +19,9 @@ function Headerb ()
 
           
           <?php
+             
+          $rowNumPublications = $_SESSION['publications'].count();
+          echo $rowNumPublications;
           #$noti = mysql_query("SELECT * FROM notificaciones WHERE user2 = '".$_SESSION['id']."' AND leido = '0' ORDER BY id_not desc");
           #$cuantas = mysql_num_rows($noti);
           ?>

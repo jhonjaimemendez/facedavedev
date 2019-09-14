@@ -19,7 +19,7 @@
 <body>
 
 	<div id="navwrapper">
-		<form action="/facedave/signin.php" method="post">
+		<form action="/facedavedev/signin.php" method="post">
 
 			<div id="navbar">
 				<table class="tablewrapper">
@@ -28,8 +28,8 @@
 						<td class="row1">Password</td>
 					</tr>
 					<tr>
-						<td><input type="text" name="email" class="inputtext"></td>
-						<td><input type="text"  name="password" class="inputtext"></td>
+						<td><input type="email" name="email" class="inputtext"></td>
+						<td><input type="password"  name="password" class="inputtext"></td>
 						<td><div>
 								<button type="submit">Log In</button>
 							</div></td>
