@@ -20,7 +20,7 @@ function Headerb ()
           
           <?php
              
-          $rowNumPublications = $_SESSION['publications'].count();
+          $rowNumPublications = $_SESSION['publications'];
           echo $rowNumPublications;
           #$noti = mysql_query("SELECT * FROM notificaciones WHERE user2 = '".$_SESSION['id']."' AND leido = '0' ORDER BY id_not desc");
           #$cuantas = mysql_num_rows($noti);
@@ -30,7 +30,7 @@ function Headerb ()
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning"><?php #echo $cuantas; ?></span>
+              <span class="label label-warning"><?php echo  $rowNumPublications ?></span>
             </a>
             <ul class="dropdown-menu">
               <li class="header">You have <?php #echo $cuantas; ?> notifications</li>

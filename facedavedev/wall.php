@@ -1,4 +1,5 @@
 <?php
+
    session_start();
 
     include 'socialnetwork-lib.php';
@@ -8,7 +9,7 @@
 
  if (! isset($_SESSION['email'])) {
      
-     header("Location: login.php");
+     header("Location: index.php");
      
  }
  
@@ -498,3 +499,4 @@
 	<script src="js/custom-file-input.js"></script>
 </body>
 </html>
+`
