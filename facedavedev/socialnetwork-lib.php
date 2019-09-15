@@ -1,6 +1,8 @@
 <?php
+require 'vendor/autoload.php';
 
- 
+
+
 function Headerb () 
 
 {
@@ -16,42 +18,59 @@ function Headerb ()
     <nav class="navbar navbar-static-top">
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-
-          
-          <?php
-             
-          $rowNumPublications = $_SESSION['publications'];
-          echo $rowNumPublications;
-          #$noti = mysql_query("SELECT * FROM notificaciones WHERE user2 = '".$_SESSION['id']."' AND leido = '0' ORDER BY id_not desc");
-          #$cuantas = mysql_num_rows($noti);
-          ?>
-
-    
+            
+           <?php
+                include 'config.php';
+               
+               $cursor = $collectionUsers->find(['_id' => $_SESSION['email'],'publications' => ['read' => '0']]);
+               
+               foreach ($cursor as $doc) {
+                   
+                   $publications =  $doc['publications'];
+               }
+               
+               if (empty($publications)) {
+                   
+                   $numrownotification = '0';
+                   
+               } else {
+                   
+                   $numrownotification = $publications->count();
+               }
+           ?>
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning"><?php echo  $rowNumPublications ?></span>
+              <span class="label label-warning"><?php echo  $numrownotification; ?></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have <?php #echo $cuantas; ?> notifications</li>
+              <li class="header">You have <?php echo $numrownotification; ?> notifications</li>
               <li>
                 
                 <ul class="menu">
 
                 <?php                
-                /*while($no = mysql_fetch_array($noti)) {
+                    foreach ($publications as $doc) {
+                        echo   'publications';
+                        $userid = $doc['user'];
+                        $type = $doc['typepublication'];
+                        
+                        $users = $collectionUsers->find( [ '_id' => $userid ] );
+                        
 
-                $users = mysql_query("SELECT * FROM usuarios WHERE id_use = '".$no['user1']."'");
-                $usa = mysql_fetch_array($users);*/
-                ?>
+                        foreach ($users as $doc1) {
+                            
+                            $names = $doc1['names'].' '. $doc1['surname'];
+                        }        
+                  ?>
 
                   <li>
-                    <a href="publication.php?id=<?php #echo $no['id_pub']; ?>">
-                      <i class="fa fa-users text-aqua"></i> The users <?php #echo $usa['usuario']; ?> <?php #echo $no['tipo']; ?> your post
+                    <a href="publication.php?id=<?php echo $names; ?>">
+                      <i class="fa fa-users text-aqua"></i> The users <?php echo $names; ?> <?php echo $type; ?> your post
                     </a>
                   </li>
 
-                <?php #} ?>
+                <?php } ?>
 
 
                 </ul>
@@ -91,7 +110,7 @@ function Headerb ()
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="editarperfil.php?id=<?php #echo $_SESSION['id'];?>" class="btn btn-default btn-flat">Edit profile</a>
+                  <a href="editarperfil.php?id=<?php echo $_SESSION['email'];?>" class="btn btn-default btn-flat">Edit profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="logout.php" class="btn btn-default btn-flat">Sign off</a>
@@ -126,10 +145,10 @@ function Side ()
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left">
-          <img src="avatars/<?php #echo $_SESSION['avatar']; ?>" width="50" alt="User Image">
+          <img src="avatars/<?php echo $_SESSION['avatar']; ?>" width="50" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?php #echo ucwords($_SESSION['usuario']); ?></p>
+          <p><?php echo ucwords($_SESSION['names']); ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>

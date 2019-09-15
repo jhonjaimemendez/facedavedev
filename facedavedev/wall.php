@@ -216,6 +216,12 @@
 
 									<?php
 
+									foreach($_SESSION['friends'] as $value) {
+									    
+									    $friends[$key] = $value;
+									    
+									
+									
         /*
          * $amistade = mysql_query("SELECT * FROM amigos WHERE para = '" . $_SESSION['id'] . "' AND estado = '0' order by id_ami desc LIMIT 4");
          * while ($am = mysql_fetch_array($amistade)) {
@@ -230,21 +236,21 @@
 												alt="Product Image">
 										</div>
 										<div class="product-info">
-											<!--   <?php echo $us['usuario']; ?>
+											<!--   <?php echo $value[0]; ?>
                       <a
-												href="solicitud.php?action=aceptar&id=<?php echo $am['id_ami']; ?>"><span
+												href="solicitud.php?action=aceptar&id=<?php #echo $am['id_ami']; ?>"><span
 												class="label label-success pull-right">Aceptar</span></a> <br>
 											<a
-												href="solicitud.php?action=rechazar&id=<?php echo $am['id_ami']; ?>"><span
+												href="solicitud.php?action=rechazar&id=<?php #echo $am['id_ami']; ?>"><span
 												class="label label-danger pull-right">Rechazar</span></a> <span
 												class="product-description">
-                          <?php echo $us['sexo']; ?>
+												<?php echo $value[1]; ?>
                         </span>
 										</div>
 									</li>
 									<!-- /.item -->
 
-                <?php #} ?>
+                <?php } ?>
 
 
               
