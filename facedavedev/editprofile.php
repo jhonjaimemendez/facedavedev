@@ -93,13 +93,13 @@ if (isset($_GET['id'])) {
 									</div>
 									<div class="form-group">
 										<label for="exampleInputEmail1">Surname</label> <input
-											type="text" name="Surname" class="form-control"
+											type="text" name="surname" class="form-control"
 											placeholder="Surname"
 											value="<?php echo $_SESSION['surname'];?>">
 									</div>
 									<div class="form-group">
 										<label for="exampleInputEmail1">Password</label> <input
-											type="text" name="password" class="form-control"
+											type="password" name="password" class="form-control"
 											placeholder="password"
 											value="<?php echo $_SESSION['password'];?>">
 									</div>
@@ -108,18 +108,18 @@ if (isset($_GET['id'])) {
 											type="file" name="avatar">
 									</div>
 									<div class="checkbox">
-										<label> <input type="radio" value="Masculine" name="gender"
-											<?php if($_SESSION['gender'] == 'Masculine') { echo 'checked'; } ?>>
-											Masculine <br> <input type="radio" value="Femenine"
+										<label> <input type="radio" value="M" name="gender"
+											<?php if($_SESSION['gender'] == 'M') { echo 'checked'; } ?>>
+											Masculine <br> <input type="radio" value="F"
 											name="gender"
-											<?php if($_SESSION['gender'] == 'Femenine') { echo 'checked'; } ?>>
+											<?php if($_SESSION['gender'] == 'F') { echo 'checked'; } ?>>
 											Femenine
 										</label>
 									</div>
 
 									<!-- Date dd/mm/yyyy -->
 									<div class="form-group">
-										<label>Fecha de nacimiento</label>
+										<label>Date of birth</label>
 
 										<div class="input-group">
 											<div class="input-group-addon">
@@ -137,7 +137,7 @@ if (isset($_GET['id'])) {
 								<!-- /.box-body -->
 
 								<div class="box-footer">
-									<button type="submit" name="actualizar" class="btn btn-primary">Update
+									<button type="submit" name="updateProfile" class="btn btn-primary">Update
 										my profile</button>
 								</div>
 							</form>
@@ -145,13 +145,13 @@ if (isset($_GET['id'])) {
 						<!-- /.box -->
 
           <?php
-    if (isset($_POST['actualizar'])) {
-
-        $name = mysql_real_escape_string($_POST['name']);
-        $surname = mysql_real_escape_string($_POST['surname']);
-        $birthdate = mysql_real_escape_string($_POST['birthdate']);
-        $gender = mysql_real_escape_string($_POST['gender']);
-
+    if (isset($_POST['updateProfile'])) {
+        $names = $_POST['name'];
+        $password = $_POST['password'];
+        $surname = $_POST['surname'];
+        $birthdate = $_POST['birthdate'];
+        $gender = $_POST['gender'];
+      
         $type = 'jpg';
         $rfoto = $_FILES['avatar']['tmp_name'];
         $name = $id . '.' . $type;
@@ -176,13 +176,13 @@ if (isset($_GET['id'])) {
                             'names'=>$names,
                             'surname'   => $surname,
                             'gender'  => $gender,
-                            'birthdate'  => $birthdate],
-                '$currentDate' => ['lastModified' => true],
+                            'birthdate'  => $birthdate
+                           ]
+                
             ]
             );
         
-        
-
+      
         /*if ($sql) {
             echo "<script type='text/javascript'>window.location='editarperfil.php?id=$_SESSION[id]';</script>";
         }*/
