@@ -1,9 +1,10 @@
 <?php
 session_start();
+include 'config.php';
 
 ini_set('error_reporting', 0);
 
-if (! isset($_SESSION['usuario'])) {
+if (! isset($_SESSION['email'])) {
     header("Location: index.php");
 }
 ?>
@@ -12,7 +13,7 @@ if (! isset($_SESSION['usuario'])) {
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>EDITAR MI PERFÃ�L</title>
+<title>Edit My Profile</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -47,14 +48,14 @@ if (! isset($_SESSION['usuario'])) {
 
 <?php
 if (isset($_GET['id'])) {
-    $id = mysql_real_escape_string($_GET['id']);
+    // $id = mysql_real_escape_string($_GET['id']);
 
-    $miuser = mysql_query("SELECT * FROM usuarios WHERE id_use = '$id'");
-    $use = mysql_fetch_array($miuser);
+    // $miuser = mysql_query("SELECT * FROM usuarios WHERE id_use = '$id'");
+    // $use = mysql_fetch_array($miuser);
 
     if ($_SESSION['id'] != $id) {
         ?>
-<script type="text/javascript">window.location="login.php";</script>
+<script type="text/javascript">window.location="index.php";</script>
 <?php
     }
     ?>
@@ -71,12 +72,10 @@ if (isset($_GET['id'])) {
 					<div class="col-md-8">
 						<!-- /.box -->
 
-
-
 						<!-- general form elements -->
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Editar mi perfÃ­l</h3>
+								<h3 class="box-title">Edit My Profile</h3>
 							</div>
 							<!-- /.box-header -->
 							<!-- form start -->
@@ -84,30 +83,33 @@ if (isset($_GET['id'])) {
 								enctype="multipart/form-data">
 								<div class="box-body">
 									<div class="form-group">
-										<label for="exampleInputEmail1">Nombre completo</label> <input
-											type="text" name="nombre" class="form-control"
-											placeholder="Nombre completo"
-											value="<?php echo $use['nombre'];?>">
+										<label for="exampleInputEmail1">Name</label> <input
+											type="text" name="name" class="form-control"
+											placeholder="names"
+											value="<?php echo $_SESSION['firstnames'];?>">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail1">Usuario</label> <input
-											type="text" name="usuario" class="form-control"
-											placeholder="Usuario" value="<?php echo $use['usuario'];?>">
+										<label for="exampleInputEmail1">Surname</label> <input
+											type="text" name="Surname" class="form-control"
+											placeholder="Surname"
+											value="<?php echo $_SESSION['surname'];?>">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail1">Email</label> <input
-											type="text" name="email" class="form-control"
-											placeholder="Email" value="<?php echo $use['email'];?>">
+										<label for="exampleInputEmail1">Password</label> <input
+											type="text" name="password" class="form-control"
+											placeholder="password"?>">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputFile">Cambiar mi avatar</label> <input
+										<label for="exampleInputFile">Change my avatar</label> <input
 											type="file" name="avatar">
 									</div>
 									<div class="checkbox">
-										<label> <input type="radio" value="H" name="sexo"
-											<?php if($use['sexo'] == 'H') { echo 'checked'; } ?>> Hombre
-											<br> <input type="radio" value="M" name="sexo"
-											<?php if($use['sexo'] == 'M') { echo 'checked'; } ?>> Mujer
+										<label> <input type="radio" value="Masculine" name="gender"
+											<?php if($_SESSION['gender'] == 'Masculine') { echo 'checked'; } ?>>
+											Masculine <br> <input type="radio" value="Femenine"
+											name="gender"
+											<?php if($_SESSION['gender'] == 'Femenine') { echo 'checked'; } ?>>
+											Femenine
 										</label>
 									</div>
 
@@ -120,7 +122,7 @@ if (isset($_GET['id'])) {
 												<i class="fa fa-calendar"></i>
 											</div>
 											<input type="text" name="nacimiento"
-												placeholder="<?php echo $use['nacimiento'];?>"
+												placeholder="<?php echo $_SESSION['birthdate'];?>"
 												class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'"
 												data-mask>
 										</div>
@@ -131,8 +133,8 @@ if (isset($_GET['id'])) {
 								<!-- /.box-body -->
 
 								<div class="box-footer">
-									<button type="submit" name="actualizar" class="btn btn-primary">Actualizar
-										datos</button>
+									<button type="submit" name="actualizar" class="btn btn-primary">Update
+										my profile</button>
 								</div>
 							</form>
 						</div>
@@ -140,42 +142,49 @@ if (isset($_GET['id'])) {
 
           <?php
     if (isset($_POST['actualizar'])) {
-        $nombre = mysql_real_escape_string($_POST['nombre']);
-        $usuario = mysql_real_escape_string($_POST['usuario']);
-        $email = mysql_real_escape_string($_POST['email']);
-        $sexo = mysql_real_escape_string($_POST['sexo']);
-        $nacimiento = mysql_real_escape_string($_POST['nacimiento']);
-        if ($nacimiento != '') {
-            $nac = $nacimiento;
+
+        $name = mysql_real_escape_string($_POST['name']);
+        $surname = mysql_real_escape_string($_POST['surname']);
+        $birthdate = mysql_real_escape_string($_POST['birthdate']);
+        $gender = mysql_real_escape_string($_POST['gender']);
+
+        $type = 'jpg';
+        $rfoto = $_FILES['avatar']['tmp_name'];
+        $name = $id . '.' . $type;
+
+        if (is_uploaded_file($rfoto)) {
+            $destino = 'images/' . $name;
+            $nombrea = $name;
+            copy($rfoto, $destino);
         } else {
-            $nac = $use['nacimiento'];
+            $name = $_SESSION['avatars'];
         }
 
-        $comprobar = mysql_num_rows(mysql_query("SELECT * FROM usuarios WHERE usuario = '$usuario' AND id_use != '$id'"));
-        if ($comprobar == 0) {
+        if ($birthdate == '') {
 
-            $type = 'jpg';
-            $rfoto = $_FILES['avatar']['tmp_name'];
-            $name = $id . '.' . $type;
-
-            if (is_uploaded_file($rfoto)) {
-                $destino = 'avatars/' . $name;
-                $nombrea = $name;
-                copy($rfoto, $destino);
-            } else {
-                $nombrea = $use['avatar'];
-            }
-
-            $sql = mysql_query("UPDATE usuarios SET nombre = '$nombre', usuario = '$usuario', email = '$email', sexo = '$sexo', nacimiento = '$nac', avatar = '$nombrea' WHERE id_use = '$id'");
-
-            if ($sql) {
-                echo "<script type='text/javascript'>window.location='editarperfil.php?id=$_SESSION[id]';</script>";
-            }
-        } else {
-            echo 'El nombre de usuario ya estÃ¡ en uso, escoja otro';
+            $birthdate = $_SESSION['birthdate'];
         }
+        
+        $updateResult = $collectionUsers->updateOne(
+            ['_id' =>  $_SESSION['email']],
+            [
+                '$set' => [ 'password'  => $password,
+                            'names'=>$names,
+                            'surname'   => $surname,
+                            'gender'  => $gender,
+                            'birthdate'  => $birthdate],
+                '$currentDate' => ['lastModified' => true],
+            ]
+            );
+        
+        
+
+        /*if ($sql) {
+            echo "<script type='text/javascript'>window.location='editarperfil.php?id=$_SESSION[id]';</script>";
+        }*/
     }
-    ?>
+
+?>
 
 
         </div>
@@ -264,15 +273,15 @@ if (isset($_GET['id'])) {
 								<ul class="users-list clearfix">
                   <?php
 
-$registrados = mysql_query("SELECT avatar,usuario,fecha_reg FROM usuarios order by id_use desc limit 8");
-    while ($reg = mysql_fetch_array($registrados)) {
-        ?>
+                $registrados = mysql_query("SELECT avatar,usuario,fecha_reg FROM usuarios order by id_use desc limit 8");
+                while ($reg = mysql_fetch_array($registrados)) {
+                    ?>
                     <li><img src="avatars/<?php echo $reg['avatar']; ?>"
 										alt="User Image"> <a class="users-list-name" href="#"><?php echo $reg['usuario']; ?></a>
 										<span class="users-list-date">Hoy</span></li>
                   <?php
-    }
-    ?>
+                }
+                ?>
 
                   </ul>
 								<!-- /.users-list -->
