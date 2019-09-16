@@ -1,12 +1,15 @@
 <?php
 session_start();
 include 'config.php';
+include 'socialnetwork-lib.php';
 
 ini_set('error_reporting', 0);
 
 if (! isset($_SESSION['email'])) {
     header("Location: index.php");
 }
+
+
 ?>
 <!DOCTYPE html>
 <htmL>
@@ -47,13 +50,13 @@ if (! isset($_SESSION['email'])) {
 <?php echo Side (); ?>
 
 <?php
+
 if (isset($_GET['id'])) {
-    // $id = mysql_real_escape_string($_GET['id']);
+    
+    $id = $_GET['id'];
+    
+    if ($_SESSION['email'] != $id) {
 
-    // $miuser = mysql_query("SELECT * FROM usuarios WHERE id_use = '$id'");
-    // $use = mysql_fetch_array($miuser);
-
-    if ($_SESSION['id'] != $id) {
         ?>
 <script type="text/javascript">window.location="index.php";</script>
 <?php
@@ -97,7 +100,8 @@ if (isset($_GET['id'])) {
 									<div class="form-group">
 										<label for="exampleInputEmail1">Password</label> <input
 											type="text" name="password" class="form-control"
-											placeholder="password"?>">
+											placeholder="password"
+											value="<?php echo $_SESSION['password'];?>">
 									</div>
 									<div class="form-group">
 										<label for="exampleInputFile">Change my avatar</label> <input
@@ -194,8 +198,7 @@ if (isset($_GET['id'])) {
 						<!-- PRODUCT LIST -->
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Solicitudes de amistad Ã³ Ãºltimos
-									seguidores</h3>
+								<h3 class="box-title">Friend requests from recent followers</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -206,8 +209,8 @@ if (isset($_GET['id'])) {
 										</div>
 										<div class="product-info">
 											<a href="javascript:void(0)" class="product-title">Marcela
-												Correa <span class="label label-success pull-right">Aceptar</span>
-											</a> <br> <span class="label label-danger pull-right">Cancelar</span></a>
+												Correa <span class="label label-success pull-right">Accept </span>
+											</a> <br> <span class="label label-danger pull-right">Cancel</span></a>
 											<span class="product-description"> Ciudad </span>
 										</div>
 									</li>
@@ -218,8 +221,8 @@ if (isset($_GET['id'])) {
 										</div>
 										<div class="product-info">
 											<a href="javascript:void(0)" class="product-title">Adriana
-												Ozuna <span class="label label-success pull-right">Aceptar</span>
-											</a> <br> <span class="label label-danger pull-right">Cancelar</span></a>
+												Ozuna <span class="label label-success pull-right">Accept </span>
+											</a> <br> <span class="label label-danger pull-right">Cancel</span></a>
 											<span class="product-description"> Ciudad </span>
 										</div>
 									</li>
@@ -230,8 +233,8 @@ if (isset($_GET['id'])) {
 										</div>
 										<div class="product-info">
 											<a href="javascript:void(0)" class="product-title">Carlos
-												andrÃ©s <span class="label label-success pull-right">Aceptar</span>
-											</a> <br> <span class="label label-danger pull-right">Cancelar</span></a>
+												andres <span class="label label-success pull-right">Accept </span>
+											</a> <br> <span class="label label-danger pull-right">Cancel</span></a>
 											<span class="product-description"> Ciudad </span>
 										</div>
 									</li>
@@ -242,8 +245,8 @@ if (isset($_GET['id'])) {
 										</div>
 										<div class="product-info">
 											<a href="javascript:void(0)" class="product-title">Maria del
-												Hoyo <span class="label label-success pull-right">Aceptar</span>
-											</a> <br> <span class="label label-danger pull-right">Cancelar</span></a>
+												Hoyo <span class="label label-success pull-right">Accept </span>
+											</a> <br> <span class="label label-danger pull-right">Cancel</span></a>
 											<span class="product-description"> Ciudad </span>
 										</div>
 									</li>
@@ -252,43 +255,11 @@ if (isset($_GET['id'])) {
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer text-center">
-								<a href="javascript:void(0)" class="uppercase">Ver todas las
-									solicitudes</a>
+								<a href="javascript:void(0)" class="uppercase">See all requests</a>
 							</div>
 							<!-- /.box-footer -->
 						</div>
 						<!-- /.box -->
-					</div>
-					<!-- /.col -->
-
-
-					<div class="col-md-4">
-						<!-- USERS LIST -->
-						<div class="box box-danger">
-							<div class="box-header with-border">
-								<h3 class="box-title">Ãšltimos registrados</h3>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body no-padding">
-								<ul class="users-list clearfix">
-                  <?php
-
-                $registrados = mysql_query("SELECT avatar,usuario,fecha_reg FROM usuarios order by id_use desc limit 8");
-                while ($reg = mysql_fetch_array($registrados)) {
-                    ?>
-                    <li><img src="avatars/<?php echo $reg['avatar']; ?>"
-										alt="User Image"> <a class="users-list-name" href="#"><?php echo $reg['usuario']; ?></a>
-										<span class="users-list-date">Hoy</span></li>
-                  <?php
-                }
-                ?>
-
-                  </ul>
-								<!-- /.users-list -->
-							</div>
-							<!-- /.box-footer -->
-						</div>
-						<!--/.box -->
 					</div>
 					<!-- /.col -->
 

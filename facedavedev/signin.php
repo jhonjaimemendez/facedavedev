@@ -20,6 +20,7 @@ if (! empty($email) && ! empty($password)) {
         $_SESSION['surname'] = $doc['surname'];
         $_SESSION['gender'] = $doc['gender'];
         $_SESSION['birthdate'] = $doc['birthdate'];
+        $_SESSION['password']  = $doc['password'];
         $_SESSION['avatars'] = $doc['profilePicture'];
         $_SESSION['memberyear'] = $doc['dateRegistration'];
         $_SESSION['numFriend'] = $doc['friends']->count();
