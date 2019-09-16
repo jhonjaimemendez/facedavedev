@@ -9,7 +9,7 @@ $password = $_POST['password'];
 
 if (! empty($email) && ! empty($password)) {
 
-    $users = $collectionUsers->find( [ '_id' => $email ] );
+    $users = $collectionUsers->find( [ '_id' => $email,'password' => $password ] );
     $friends = array();
     
     foreach ($users as $doc) {
@@ -22,7 +22,7 @@ if (! empty($email) && ! empty($password)) {
         
         foreach($doc['friends'] as $key => $value) {
             
-            $friends[$key] = array($value['user'],$value['user']);
+            $friends[$key] = array($value['user'],$value['gender']);
                 
         }
         

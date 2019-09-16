@@ -24,15 +24,16 @@
         'dateRegistration'  => $dateRegistration,
         'profilePicture'  => $profilePicture,
         'publications'  => [
-                            ['user' => '14', 'multimediaurl' => 'cm','coments' => 'cm',
-                            'likes' => 'cm', 'date' => 'cm',
-                            'read' => '0','typepublication' => 'cm']
+
+                    ['user' => '14', 'multimediaurl' => 'cm','coments' => 'cm',
+                    'likes' => 'cm', 'date' => 'cm',
+                    'read' => '0','typepublication' => 'cm']
             ],
        'friends'  => [
+
            ['user' => '14', 'date' => '21', 'gender' => '21',
-                      'status' => 'cm']
-          ]
-          
+            'status' => 'cm']
+           ]
       ]
    );
   
