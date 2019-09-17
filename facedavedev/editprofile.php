@@ -88,19 +88,19 @@ if (isset($_GET['id'])) {
 									<div class="form-group">
 										<label for="exampleInputEmail1">Name</label> <input
 											type="text" name="name" class="form-control"
-											placeholder="names"
+											placeholder="names" required
 											value="<?php echo $_SESSION['firstnames'];?>">
 									</div>
 									<div class="form-group">
 										<label for="exampleInputEmail1">Surname</label> <input
 											type="text" name="surname" class="form-control"
-											placeholder="Surname"
+											placeholder="Surname" required
 											value="<?php echo $_SESSION['surname'];?>">
 									</div>
 									<div class="form-group">
 										<label for="exampleInputEmail1">Password</label> <input
 											type="password" name="password" class="form-control"
-											placeholder="password"
+											placeholder="password" required
 											value="<?php echo $_SESSION['password'];?>">
 									</div>
 									<div class="form-group">
@@ -152,14 +152,21 @@ if (isset($_GET['id'])) {
         $birthdate = $_POST['birthdate'];
         $gender = $_POST['gender'];
       
+        $_SESSION['firstnames'] = $names ;
+        $_SESSION['password'] = $_POST['password'];
+        $_SESSION['surname'] = $names ;
+        $_SESSION['names'] = $names.' '.$surname;
+        
         $type = 'jpg';
         $rfoto = $_FILES['avatar']['tmp_name'];
         $name = $id . '.' . $type;
 
+        
         if (is_uploaded_file($rfoto)) {
             $destino = 'images/' . $name;
-            $nombrea = $name;
+            $_SESSION['avatars'] = $destino;
             copy($rfoto, $destino);
+            
         } else {
             $name = $_SESSION['avatars'];
         }
@@ -167,6 +174,10 @@ if (isset($_GET['id'])) {
         if ($birthdate == '') {
 
             $birthdate = $_SESSION['birthdate'];
+            
+        } else {
+            
+            $_SESSION['birthdate'] = $birthdate;
         }
         
         $updateResult = $collectionUsers->updateOne(
@@ -182,10 +193,10 @@ if (isset($_GET['id'])) {
             ]
             );
         
-      
-        /*if ($sql) {
-            echo "<script type='text/javascript'>window.location='editarperfil.php?id=$_SESSION[id]';</script>";
-        }*/
+        header('Location: wall.php');
+        if ($updateResult) {
+            echo "<script type='text/javascript'>window.location='wall.php';</script>";
+        }
     }
 
 ?>

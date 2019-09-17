@@ -1,46 +1,44 @@
 <?php
+session_start();
 
-   session_start();
+include 'socialnetwork-lib.php';
 
-    include 'socialnetwork-lib.php';
+ini_set('error_reporting', 0);
 
-    ini_set('error_reporting',0);
+if (! isset($_SESSION['email'])) {
 
+    header("Location: index.php");
+}
 
- if (! isset($_SESSION['email'])) {
-     
-     header("Location: index.php");
-     
- }
- 
 ?>
 
 <!DOCTYPE html>
 <html class="no-js">
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-	       name="viewport">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FaceDave</title>
+<meta charset="utf-8">
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>FaceDave</title>
 
-	<link REL="SHORTCUT ICON" HREF="images/icon.ico" />
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet"
-    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet"
-    	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" type="text/css" href="css/component.css" />
+<link REL="SHORTCUT ICON" HREF="images/icon.ico" />
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" type="text/css" href="css/component.css" />
 
-	<script>(function(e,t,n){
+<script>(function(e,t,n){
 		 var r=e.querySelectorAll("html")[0];
 		 r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})
 		 (document,window,0);
 	 </script>
 
-	 <script type="text/javascript">    
+<script type="text/javascript">    
          function validateKeys(e) {
 
              key = (document.all) ? e.keyCode : e.which;
@@ -55,13 +53,13 @@
             return patron.test(te);
         } 
     </script>
-	
-    <!-- Scroll -->
-    <script
-    	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+
+<!-- Scroll -->
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 	</script>
-    
-    <script src="js/jquery.jscroll.js"></script>
+
+<script src="js/jquery.jscroll.js"></script>
 
 </head>
 
@@ -79,7 +77,7 @@
 			<!-- Main content -->
 			<section class="content">
 
-	
+
 				<!-- Main row -->
 				<div class="row">
 					<!-- Left col -->
@@ -107,11 +105,8 @@
 													onkeypress="return validateKeys(event)"
 													placeholder="What do you think today?" class="form-control"
 													cols="200" rows="3" required></textarea>
-												<br> <br> <br> <br>
-
-												
-												<input type="file" name="foto" id="file-1"
-													class="inputfile inputfile-1"
+												<br> <br> <br> <br> <input type="file" name="picture"
+													id="file-1" class="inputfile inputfile-1"
 													data-multiple-caption="{count} files selected" /> <label
 													for="file-1"><svg xmlns="http://www.w3.org/2000/svg"
 														width="20" height="17" viewBox="0 0 20 17">
@@ -126,51 +121,27 @@
 											</div>
 										</form>
                  <?php
-                /*
-                 * $next_increment = $data['Auto_increment'];
-                 * if (isset($_POST['publicar'])) {
-                 * $publicacion = mysql_real_escape_string($_POST['publicacion']);
-                 *
-                 * $result = mysql_query("SHOW TABLE STATUS WHERE `Name` = 'publicaciones'");
-                 * $data = mysql_fetch_assoc($result);
-                 *
-                 * $alea = substr(strtoupper(md5(microtime(true))), 0, 12);
-                 * $code = $next_increment . $alea;
-                 *
-                 * $type = 'jpg';
-                 * $rfoto = $_FILES['foto']['tmp_name'];
-                 * $name = $code . "." . $type;
-                 *
-                 * if (is_uploaded_file($rfoto)) {
-                 * $destino = "publicaciones/" . $name;
-                 * $nombre = $name;
-                 * copy($rfoto, $destino);
-                 *
-                 * $llamar = mysql_num_rows(mysql_query("SELECT * FROM albumes WHERE usuario ='" . $_SESSION['id'] . "' AND nombre = 'Publicaciones'"));
-                 *
-                 * if ($llamar >= 1) {} else {
-                 *
-                 * $crearalbum = mysql_query("INSERT INTO albumes (usuario,fecha,nombre) values ('" . $_SESSION['id'] . "',now(),'Publicaciones')");
-                 * }
-                 *
-                 * $idalbum = mysql_query("SELECT * FROM albumes WHERE usuario ='" . $_SESSION['id'] . "' AND nombre = 'Publicaciones'");
-                 * $alb = mysql_fetch_array($idalbum);
-                 *
-                 * $subirimg = mysql_query("INSERT INTO fotos (usuario,fecha,ruta,album,publicacion) values ('" . $_SESSION['id'] . "',now(),'$nombre','" . $alb['id_alb'] . "','$next_increment')");
-                 *
-                 * $llamadoimg = mysql_query("SELECT id_fot FROM fotos WHERE usuario = '" . $_SESSION['id'] . "' ORDER BY id_fot desc");
-                 * $llaim = mysql_fetch_array($llamadoimg);
-                 * } else {
-                 * $nombre = '';
-                 * }
-                 *
-                 * $subir = mysql_query("INSERT INTO publicaciones (usuario,fecha,contenido,imagen,album,comentarios) values ('" . $_SESSION['id'] . "',now(),'$publicacion','" . $llaim['id_fot'] . "','" . $alb['id_alb'] . "','1')");
-                 *
-                 * if ($subir) {
-                 * echo '<script>window.location="index.php"</script>';
-                 * }
-                 * }
-                 */
+
+                if (isset($_POST['post'])) {
+
+                    $publication = $_POST['publication'];
+                    $dateRegistration =  date('Y/m/d H:i:s');
+                    $alea = substr(strtoupper(md5(microtime(true))), 0, 12);
+                    $type = 'jpg';
+                    $rfoto = $_FILES['foto']['tmp_name'];
+                    
+                    if (is_uploaded_file($rfoto)) {
+                        
+                        $name = $_SESSION['email'] . "." . $type;
+                        $destino = "/images/" . $name;
+                        copy($rfoto, $destino);
+                    
+                    } else {
+
+                        $name = '';
+                    }
+                }
+
                 ?>            
                 </div>
 									<!-- /.box-footer-->
@@ -186,7 +157,7 @@
 						<div class="scroll">
 							<?php
 
-    // require_once 'publicaciones.php';
+    require_once 'publications.php';
     ?> 
 						</div>
 
@@ -198,14 +169,14 @@
             });
             });
             </script>
-						
+
 
 
 					</div>
 
 					<div class="col-md-4">
 
-						
+
 						<div class="box box-primary">
 							<div class="box-header with-border">
 								<h3 class="box-title">Friend requests</h3>
@@ -216,24 +187,21 @@
 
 									<?php
 
-									foreach($_SESSION['friends'] as $value) {
-									    
-									    $friends[$key] = $value;
-									    
-									
-									
-        /*
-         * $amistade = mysql_query("SELECT * FROM amigos WHERE para = '" . $_SESSION['id'] . "' AND estado = '0' order by id_ami desc LIMIT 4");
-         * while ($am = mysql_fetch_array($amistade)) {
-         *
-         * $use = mysql_query("SELECT * FROM usuarios WHERE id_use = '" . $am['de'] . "'");
-         * $us = mysql_fetch_array($use);
-         */
-        ?>
+        foreach ($_SESSION['friends'] as $value) {
+
+            $friends[$key] = $value;
+
+            /*
+             * $amistade = mysql_query("SELECT * FROM amigos WHERE para = '" . $_SESSION['id'] . "' AND estado = '0' order by id_ami desc LIMIT 4");
+             * while ($am = mysql_fetch_array($amistade)) {
+             *
+             * $use = mysql_query("SELECT * FROM usuarios WHERE id_use = '" . $am['de'] . "'");
+             * $us = mysql_fetch_array($use);
+             */
+            ?>
 									<li class="item">
 										<div class="product-img">
-											<img src="images/avatar.png; ?>"
-												alt="Product Image">
+											<img src="images/avatar.png; ?>" alt="Product Image">
 										</div>
 										<div class="product-info">
 											<!--   <?php echo $value[0]; ?>
@@ -261,6 +229,8 @@
 								
 								
 								
+								
+								
 								</ul>
 							</div>
 							<!-- /.box-body -->
@@ -268,7 +238,8 @@
               <?php
 
             // if(mysql_num_rows($amistade) > 4) { ?>
-              <a href="javascript:void(0)" class="uppercase">See all the requests</a>
+              <a href="javascript:void(0)" class="uppercase">See all the
+									requests</a>
               <?php #} ?> 
             </div>
 							<!-- /.box-footer -->
