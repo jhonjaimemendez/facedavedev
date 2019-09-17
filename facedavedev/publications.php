@@ -111,18 +111,18 @@ $(document).ready(function() {
 
               #if (mysql_num_rows($query) == 0) { ?>
 
-                <li><div class="btn btn-default btn-xs like" id="<?php #echo $lista['id_pub']; ?>"><i class="fa fa-thumbs-o-up"></i> Me gusta </div><span id="likes_<?php echo $lista['id_pub']; ?>"> (<?php echo $lista['likes']; ?>)</span></li>
+                <li><div class="btn btn-default btn-xs like" id="<?php #echo $lista['id_pub']; ?>"><i class="fa fa-thumbs-o-up"></i> I like it </div><span id="likes_<?php echo $lista['id_pub']; ?>"> (<?php echo $lista['likes']; ?>)</span></li>
 
               <?php #} else { ?>
                 
-                <li><div class="btn btn-default btn-xs like" id="<?php #echo $lista['id_pub']; ?>"><i class="fa fa-thumbs-o-up"></i> No me gusta </div><span id="likes_<?php echo $lista['id_pub']; ?>"> (<?php echo $lista['likes']; ?>)</span></li>
+                <li><div class="btn btn-default btn-xs like" id="<?php #echo $lista['id_pub']; ?>"><i class="fa fa-thumbs-o-up"></i> I do not like </div><span id="likes_<?php echo $lista['id_pub']; ?>"> (<?php echo $lista['likes']; ?>)</span></li>
 
               <?php #} ?>
 
 
 
                     <li class="pull-right">
-                      <span href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comentarios
+                      <span href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
                         (<?php #echo $numcomen; ?>)</span></li>
                   </ul>
             </div>

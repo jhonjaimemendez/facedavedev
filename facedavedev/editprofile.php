@@ -193,7 +193,7 @@ if (isset($_GET['id'])) {
             ]
             );
         
-        header('Location: wall.php');
+        
         if ($updateResult) {
             echo "<script type='text/javascript'>window.location='wall.php';</script>";
         }

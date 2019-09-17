@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include 'config.php';
 include 'socialnetwork-lib.php';
 
 ini_set('error_reporting', 0);
@@ -128,18 +128,33 @@ if (! isset($_SESSION['email'])) {
                     $dateRegistration =  date('Y/m/d H:i:s');
                     $alea = substr(strtoupper(md5(microtime(true))), 0, 12);
                     $type = 'jpg';
-                    $rfoto = $_FILES['foto']['tmp_name'];
+                    $rfoto = $_FILES['picture']['tmp_name'];
                     
                     if (is_uploaded_file($rfoto)) {
                         
-                        $name = $_SESSION['email'] . "." . $type;
-                        $destino = "/images/" . $name;
+                        $name = $_SESSION['email'] .$alea. "." . $type;
+                        $destino = "images/" . $name;
                         copy($rfoto, $destino);
                     
                     } else {
 
-                        $name = '';
+                        $destino = '';
                     }
+                    
+                    $updateResult = $collectionUsers->updateOne(
+                    ['_id' =>  $_SESSION['email']],
+                    [
+                    '$push' => [ 'post'  => [
+                    
+                                 ['text' => $publication, 'imageURL' => $destino, 
+                                  'datePublication' => date('Y/m/d H:i:s')
+                                 ]
+                                             ]
+                               ]
+                     
+                    ]
+                    );
+                    
                 }
 
                 ?>            
