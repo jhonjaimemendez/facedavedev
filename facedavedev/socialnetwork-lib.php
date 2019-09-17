@@ -21,8 +21,10 @@ function Headerb ()
             
            <?php
                 include 'config.php';
+                
+                $numrownotification = 0;
                
-               $cursor = $collectionUsers->find(['_id' => $_SESSION['email'],'publications' => ['read' => '0']]);
+               /*$cursor = $collectionUsers->find(['_id' => $_SESSION['email'],'publications' => ['read' => '0']]);
                
                foreach ($cursor as $doc) {
                    
@@ -36,7 +38,7 @@ function Headerb ()
                } else {
                    
                    $numrownotification = $publications->count();
-               }
+               }*/
            ?>
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -50,7 +52,7 @@ function Headerb ()
                 <ul class="menu">
 
                 <?php                
-                    foreach ($publications as $doc) {
+                  /*  foreach ($publications as $doc) {
                         echo   'publications';
                         $userid = $doc['user'];
                         $type = $doc['typepublication'];
@@ -61,16 +63,16 @@ function Headerb ()
                         foreach ($users as $doc1) {
                             
                             $names = $doc1['names'].' '. $doc1['surname'];
-                        }        
+                        }   */     
                   ?>
 
                   <li>
-                    <a href="publication.php?id=<?php echo $names; ?>">
-                      <i class="fa fa-users text-aqua"></i> The users <?php echo $names; ?> <?php echo $type; ?> your post
+                    <a href="publication.php?id=<?php #echo $names; ?>">
+                      <i class="fa fa-users text-aqua"></i> The users <?php #echo $names; ?> <?php #echo $type; ?> your post
                     </a>
                   </li>
 
-                <?php } ?>
+                <?php #} ?>
 
 
                 </ul>

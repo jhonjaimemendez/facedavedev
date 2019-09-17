@@ -9,7 +9,7 @@
   $email = $_POST['email']; 
   $password = $_POST['password'];
   $gender = $_POST['gender'];
-  $birthdate = $_POST['year'].'-'.$_POST['month'].'-'.$_POST['day'];
+  $birthdate = $_POST['year'].'/'.$_POST['month'].'/'.$_POST['day'];
   $dateRegistration =  date('Y/m/d H:i:s');
   $profilePicture = "images/avatar.png";
   
@@ -22,8 +22,16 @@
         'gender'  => $gender,
         'birthdate'  => $birthdate,
         'dateRegistration'  => $dateRegistration,
-        'profilePicture'  => $profilePicture,
-        'publications'  => [
+        'profilePicture'  => $profilePicture
+      ]
+   );
+  
+  $_SESSION['email'] = $email;
+  $_SESSION['avatars'] = $profilePicture;
+  $_SESSION['names'] = $names.' '.$surname;
+  $_SESSION['memberyear'] = date('Y');
+  /**
+   *  'publications'  => [
 
                     ['user' => '14', 'multimediaurl' => 'cm','coments' => 'cm',
                     'likes' => 'cm', 'date' => 'cm',
@@ -34,12 +42,6 @@
            ['user' => '14', 'date' => '21', 'gender' => '21',
             'status' => 'cm']
            ]
-      ]
-   );
-  
-  $_SESSION['email'] = $email;
-  $_SESSION['avatars'] = $profilePicture;
-  $_SESSION['names'] = $names.' '.$surname;
-  $_SESSION['memberyear'] = date('Y');
+   */
   header('Location: wall.php');
 ?>

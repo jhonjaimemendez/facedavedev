@@ -43,40 +43,40 @@ $(document).ready(function() {
 
 <?php
 
-    $CantidadMostrar=5;
-     # Validado  la variable GET
-    #$compag         =(int)(!isset($_GET['pag'])) ? 1 : $_GET['pag']; 
-	#$TotalReg       =mysql_query("SELECT * FROM publicaciones");
-	#$totalr = mysql_num_rows($TotalReg);
-	//Se divide la cantidad de registro de la BD con la cantidad a mostrar 
-	#$TotalRegistro  =ceil($totalr/$CantidadMostrar);
-	 //Operacion matematica para mostrar los siquientes datos.
-	#$IncrimentNum =(($compag +1)<=$TotalRegistro)?($compag +1):0;
-	//Consulta SQL
-	#$consultavistas ="SELECT *
-	#			FROM
-	#			publicaciones
-	#			ORDER BY
-	#			id_pub DESC LIMIT ".(($compag-1)*$CantidadMostrar)." , ".$CantidadMostrar;
-	#$consulta=mysql_query($consultavistas);
-	#while ($lista=mysql_fetch_array($consulta)) {
-
-	#	$userid = mysql_real_escape_string($lista['usuario']);
-
-	#	$usuariob = mysql_query("SELECT * FROM usuarios WHERE id_use = '$userid'");
-    #$use = mysql_fetch_array($usuariob);
-
-    #$fotos = mysql_query("SELECT * FROM fotos WHERE publicacion = '$lista[id_pub]'");
-    #$fot = mysql_fetch_array($fotos);
-	?>
+    $numRowsShow=5;
+    
+    $compag         =(int)(!isset($_GET['pag'])) ? 1 : $_GET['pag'];
+    
+    $cursor = $collectionUsers->find(['$or' => 
+                                     [
+                                        ['_id' => $_SESSION['email']],
+                                        ['friends' => ['user' => $_SESSION['email']]]
+                                     ],
+     ]);
+    
+    
+   
+  
+    foreach ($cursor  as $doc) {
+        echo 'publications publications';
+        
+        foreach($doc['publications'] as $key => $value) {
+            
+            $datePublications = $value['datePublication'];
+            $multimediaurl = $value['multimediaurl'];
+            $text  = $value['text'];
+            $likes = $value['likes'];
+            $nolikes = '0';
+            $numComment =  '0';
+        	?>
 	<!-- START PUBLICACIONES -->
           <!-- Box Comment -->
           <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="avatars/<?php #echo $use['avatar']; ?>" alt="User Image">
-                <span class="description" onclick="location.href='perfil.php?id=<?php echo $use['id_use'];?>';" style="cursor:pointer; color: #3C8DBC;""><?php echo $use['usuario'];?></span>
-                <span class="description"><?php #echo $lista['fecha'];?></span>
+                <img class="img-circle" src="avatars/<?php echo $doc['profilePicture']; ?>" alt="User Image">
+                <span class="description" onclick="location.href='perfil.php?id=<?php echo $doc['_id'];?>';" style="cursor:pointer; color: #3C8DBC;""><?php echo $doc['names'];?></span>
+                <span class="description"><?php echo $datePublications;?></span>
                </div>
               <!-- /.user-block -->
               <div class="box-tools">
@@ -88,15 +88,14 @@ $(document).ready(function() {
             <!-- /.box-header -->
             <div class="box-body">
               <!-- post text -->
-              <p><?php #echo $lista['contenido'];?></p>
+              <p><?php echo $text;?></p>
 
               <?php 
-              #if($lista['imagen'] != 0)
-              #{
+              if(!empty($multimediaurl)) {
               ?>
-              <img src="publicaciones/<?php #echo $fot['ruta'];?>" width="100%">
+              <img src="<?php echo $multimediaurl;?>" width="100%">
               <?php
-          	  #}
+          	  }
           	  ?>
 
               <br><br>
@@ -111,11 +110,11 @@ $(document).ready(function() {
 
               #if (mysql_num_rows($query) == 0) { ?>
 
-                <li><div class="btn btn-default btn-xs like" id="<?php #echo $lista['id_pub']; ?>"><i class="fa fa-thumbs-o-up"></i> I like it </div><span id="likes_<?php echo $lista['id_pub']; ?>"> (<?php echo $lista['likes']; ?>)</span></li>
+                <li><div class="btn btn-default btn-xs like" id="<?php echo $likes; ?>"><i class="fa fa-thumbs-o-up"></i> I like it </div><span id="likes_<?php echo $likes; ?>"> (<?php echo $likes; ?>)</span></li>
 
               <?php #} else { ?>
                 
-                <li><div class="btn btn-default btn-xs like" id="<?php #echo $lista['id_pub']; ?>"><i class="fa fa-thumbs-o-up"></i> I do not like </div><span id="likes_<?php echo $lista['id_pub']; ?>"> (<?php echo $lista['likes']; ?>)</span></li>
+                <li><div class="btn btn-default btn-xs like" id="<?php echo $nolikes; ?>"><i class="fa fa-thumbs-o-up"></i> I do not like </div><span id="likes_<?php echo $nolikes; ?>"> (<?php echo $nolikes; ?>)</span></li>
 
               <?php #} ?>
 
@@ -123,7 +122,7 @@ $(document).ready(function() {
 
                     <li class="pull-right">
                       <span href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (<?php #echo $numcomen; ?>)</span></li>
+                        (<?php echo $numComment; ?>)</span></li>
                   </ul>
             </div>
             <!-- /.box-body -->
@@ -156,7 +155,7 @@ $(document).ready(function() {
               <?php #if ($numcomen > 2) { ?> 
               <br>
                 <center><span onclick="location.href='publicacion.php?id=<?php #echo $lista['id_pub'];?>';" style="cursor:pointer; color: #3C8DBC;">Ver todos los comentarios</span></center>
-              <?php #} ?>
+              <?php } } ?>
 
               <div id="nuevocomentario<?php  #echo $lista['id_pub'];?>"></div>
               <br>

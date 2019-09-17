@@ -9,8 +9,8 @@ $password = $_POST['password'];
 
 if (! empty($email) && ! empty($password)) {
 
-    $users = $collectionUsers->find( [ '_id' => $email,'password' => $password ] );
-    $friends = array();
+    $users = $collectionUsers->find([ '_id' => $email,'password' => $password ] );
+     //$friends = array();
      
     foreach ($users as $doc) {
      
@@ -23,15 +23,15 @@ if (! empty($email) && ! empty($password)) {
         $_SESSION['password']  = $doc['password'];
         $_SESSION['avatars'] = $doc['profilePicture'];
         $_SESSION['memberyear'] = $doc['dateRegistration'];
-        $_SESSION['numFriend'] = $doc['friends']->count();
+        
      
-        foreach($doc['friends'] as $key => $value) {
+       /* foreach($doc['publications'] as $key => $value) {
             
             $friends[$key] = array($value['user'],$value['gender']);
                 
         }
         
-        $_SESSION['friends'] = $friends;
+        /*$_SESSION['friends'] = $friends;*/
         
     }
     

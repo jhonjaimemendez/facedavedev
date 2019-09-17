@@ -144,13 +144,13 @@ if (! isset($_SESSION['email'])) {
                     $updateResult = $collectionUsers->updateOne(
                     ['_id' =>  $_SESSION['email']],
                     [
-                    '$push' => [ 'post'  => [
+                    '$push' => [ 'publications'  => 
                     
-                                 ['text' => $publication, 'imageURL' => $destino, 
-                                  'datePublication' => date('Y/m/d H:i:s')
-                                 ]
-                                             ]
-                               ]
+                        [ 'text' => $publication,'multimediaurl' => $destino,'coments' => '',
+                          'likes' => '0', 'datePublication' => date('Y/m/d H:i:s'),
+                          'typepublication' => 'post']
+                        
+                       ]
                      
                     ]
                     );
