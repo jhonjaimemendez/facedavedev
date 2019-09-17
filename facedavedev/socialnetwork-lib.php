@@ -24,21 +24,22 @@ function Headerb ()
                 
                 $numrownotification = 0;
                
-               /*$cursor = $collectionUsers->find(['_id' => $_SESSION['email'],'publications' => ['read' => '0']]);
+               $cursor = $collectionUsers->find(['_id' => $_SESSION['email'],
+                                                 'notifications.read' => '0']);
+               $notifications = array();
                
                foreach ($cursor as $doc) {
                    
-                   $publications =  $doc['publications'];
+                   foreach ($doc['notifications'] as $key => $value) {
+                        
+                       $numrownotification = $numrownotification + 1;
+                       $notifications[$key] = array($value['text'],$value['user']);
+                       
+                   }
                }
                
-               if (empty($publications)) {
-                   
-                   $numrownotification = '0';
-                   
-               } else {
-                   
-                   $numrownotification = $publications->count();
-               }*/
+     
+              
            ?>
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

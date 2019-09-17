@@ -10,7 +10,6 @@ $password = $_POST['password'];
 if (! empty($email) && ! empty($password)) {
 
     $users = $collectionUsers->find([ '_id' => $email,'password' => $password ] );
-     //$friends = array();
      
     foreach ($users as $doc) {
      

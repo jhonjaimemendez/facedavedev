@@ -4,7 +4,6 @@
     unset($_SESSION['avatars']);
     unset($_SESSION['names']);
     unset($_SESSION['memberyear']);
-    unset($_SESSION['publications']);
     unset($_SESSION['firstnames'] );
     unset($_SESSION['surname'] );
     unset($_SESSION['gender'] );

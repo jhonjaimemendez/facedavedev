@@ -29,7 +29,13 @@
   $_SESSION['email'] = $email;
   $_SESSION['avatars'] = $profilePicture;
   $_SESSION['names'] = $names.' '.$surname;
-  $_SESSION['memberyear'] = date('Y');
+  $_SESSION['memberyear'] =  date('Y');
+  $_SESSION['firstnames'] = $names;
+  $_SESSION['surname'] = $surname;
+  $_SESSION['gender'] = $gender;
+  $_SESSION['birthdate'] = $birthdate;
+  $_SESSION['password']  = $password;
+  
   /**
    *  'publications'  => [
 

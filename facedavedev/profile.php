@@ -115,9 +115,23 @@ if(!isset($_SESSION['email']))
               
               <?php
               if(isset($_POST['follow'])) {
-                $add = mysql_query("INSERT INTO amigos (de,para,fecha,estado) values ('".$_SESSION['id']."','$id',now(),'0')");
-                if($add) {echo '<script>window.location="perfil.php?id='.$id.'"</script>';}
-              }
+                
+                  echo 'follow';
+                  $updateResult = $collectionUsers->updateOne(
+                      ['_id' =>  $id],
+                      [
+                          '$push' => [ 'notifications'  =>
+                              
+                              [ 'user' => $_SESSION['email'], 
+                                'text' => $_SESSION['names'].' has sent you a request for friendship',
+                                'read' => '0']
+                              
+                          ]
+                          
+                      ]);
+                  echo 'follow';
+                  //echo '<script>window.location="perfil.php?id='.$id.'"</script>';
+               }
               ?>
 
               
