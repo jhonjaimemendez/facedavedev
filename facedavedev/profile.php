@@ -128,12 +128,12 @@ if(!isset($_SESSION['email']))
                           '$push' => [ 'notifications'  =>
                               
                               [ 'user' => $_SESSION['email'], 
-                                'text' => $_SESSION['names'].' has sent you a request for friendship',
                                 'read' => '0']
                               
                           ]
                           
                       ]);
+                  
                   
               } elseif (isset($_POST['accept'])) {
                   
@@ -153,13 +153,25 @@ if(!isset($_SESSION['email']))
                   $updateResult = $collectionUsers->updateOne(
                       ['_id' =>  $_SESSION['email'],'notifications.user' => $id],
                       [
-                          '$set' => [ 'notifications.read'  => '1'
+                          '$set' => [ 'notifications'  => ['user' => $id,
+                                                          'read'  => '1']
                                     ]
                           
                       ]
                       );
                   
                
+              } elseif (isset($_POST['reject'])) {
+                
+                  $updateResult = $collectionUsers->updateOne(
+                      ['_id' =>  $_SESSION['email'],'notifications.user' => $id],
+                      [
+                          '$set' => [ 'notifications'  => ['user' => $id,'read'  => '2']
+                          ]
+                          
+                      ]
+                      );
+                  
               }
               
               if ($updateResult) {
@@ -169,8 +181,7 @@ if(!isset($_SESSION['email']))
 
               
               <br>
-              <a href="chat.php?usuario=<?php #echo $id; ?>"><input type="button" class="btn btn-default btn-block" name="dejarseguir" value="Enviar chat"></a>
-
+             
 
             </div>
             <!-- /.box-body -->

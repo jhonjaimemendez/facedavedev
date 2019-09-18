@@ -23,6 +23,14 @@ if (! empty($email) && ! empty($password)) {
         $_SESSION['avatars'] = $doc['profilePicture'];
         $_SESSION['memberyear'] = $doc['dateRegistration'];
         
+        if (empty($doc['friends'])) {
+          
+            $_SESSION['numFriend'] = '0';
+            
+        } else {
+            
+            $_SESSION['numFriend'] = $doc['friends']->count();
+        }
         
     }
     

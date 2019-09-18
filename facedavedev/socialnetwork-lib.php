@@ -181,6 +181,9 @@ function Side ()
         <li>
           <a href="index.php">
             <i class="fa fa-arrow-right"></i> <span>Followed</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green"><?php  echo $_SESSION['numFriend']; ?> </small>
+            </span>
           </a>
         </li>
         <li>

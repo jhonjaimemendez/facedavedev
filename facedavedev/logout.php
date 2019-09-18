@@ -12,5 +12,5 @@
     unset($_SESSION['numFriend'] );
 
     
-    header('Refresh: 2; URL = index.php');
+    header('Refresh: 1; URL = index.php');
 ?>
