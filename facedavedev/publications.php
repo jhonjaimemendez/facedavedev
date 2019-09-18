@@ -3,14 +3,15 @@ include 'config.php';
 ?>
 <script type="text/javascript" src="js/likes.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
 
-    $(".enviar-btn").keypress(function(event) {
 
-      if ( event.which == 13 ) {
-
-        var getpID =  $(this).parent().attr('id').replace('record-','');
-
+    function sendComment(event)  {
+    	console.debug(".enviar-btn");
+    	console.debug(event.which);
+      if ( event.which == 114 ) {
+    	  console.debug(".enviar-btn");
+        var getpID =  'sdfsd';//$(this).parent().attr('id').replace('record-','');
+    	  console.debug(".enviar-btn");
         var user = $("input#user").val();
         var avatar = $("input#avatar").val();
         var comment = $("#comment-"+getpID).val();
@@ -18,7 +19,7 @@ $(document).ready(function() {
         var now = new Date();
         var date_show = now.getDate() + '-' + now.getMonth() + '-' + now.getFullYear() + ' ' + now.getHours() + ':' + + now.getMinutes() + ':' + + now.getSeconds();
 
-        if (comentario == '') {
+        if (comment == '') {
             alert('You must add a comment');
             return false;
         }
@@ -27,7 +28,7 @@ $(document).ready(function() {
 
         $.ajax({
                 type: "POST",
-                url: "addcomment.php",
+                url: "addComment.php",
                 data: dataString,
                 success: function() {
                     $('#newcomment'+getpID).append('<div class="box-comment"><img class="img-circle img-sm" src="'+ avatar +'"><div class="comment-text"><span class="username"> '+ nombre +'<span class="text-muted pull-right">' + date_show + '</span></span>' + comment + '</div></div>');
@@ -35,9 +36,9 @@ $(document).ready(function() {
         });
         return false;
       }
-    });
+    }
 
-});
+
 </script>
 
 <?php
@@ -153,8 +154,8 @@ $(document).ready(function() {
               <div id="nuevocomentario<?php  #echo $lista['id_pub'];?>"></div>
               <br>
                 <form method="post" action="">
-                <label id="record-<?php   echo $idPublications; ?>">
-                <input type="text" class="enviar-btn form-control input-sm" style="width: 700px;" placeholder="Write a comment" name="comment" id="coment-<?php  echo  $idPublications;?>">
+                <label id="record-<?php echo $idPublications; ?>">
+                <input type="text" onkeypress="sendComment(event)" class="enviar-btn form-control input-sm" style="width: 700px;" placeholder="Write a comment" name="comment" id="comment-<?php  echo  $idPublications;?>">
                 <input type="hidden" name="user" value="<?php $_SESSION['email'];?>" id="user">
                 <input type="hidden" name="publicationId" value="<?php echo $idPublications;?>" id="publicationId">
                 <input type="hidden" name="avatar" value="<?php $_SESSION['avatars'];?>" id="avatar">

@@ -1,9 +1,9 @@
 <?php
 require('config.php');
 
-$user = mysql_real_escape_string($_POST['user']);
-$comment = mysql_real_escape_string($_POST['comment']);
-$publication = mysql_real_escape_string($_POST['publication']);
+$user = $_POST['user'];
+$comment = $_POST['comment'];
+$publication = $_POST['publication'];
 
 
 $updateResult = $collectionUsers->updateOne(
