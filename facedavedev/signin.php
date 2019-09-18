@@ -24,10 +24,13 @@ if (! empty($email) && ! empty($password)) {
         $_SESSION['memberyear'] = $doc['dateRegistration'];
         $_SESSION['numFriends'] = '0';
         
-        if ($doc['friends']) {
+        if (!empty($doc['friends'])) {
         
-            $_SESSION['numFriends'] = $doc['friends']->count();
+            if ($doc['friends']) {
+        
+                $_SESSION['numFriends'] = $doc['friends']->count();
             
+            }
         }
         
         

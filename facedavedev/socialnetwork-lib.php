@@ -140,7 +140,7 @@ function Side ()
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left">
-          <img src="avatars/<?php echo $_SESSION['avatar']; ?>" width="50" alt="User Image">
+          <img src="<?php echo $_SESSION['avatars']; ?>" width="50" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?php echo ucwords($_SESSION['names']); ?></p>
