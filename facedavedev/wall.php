@@ -125,36 +125,36 @@ if (! isset($_SESSION['email'])) {
                 if (isset($_POST['post'])) {
 
                     $publication = $_POST['publication'];
-                    $dateRegistration =  date('Y/m/d H:i:s');
+                    $dateRegistration = date('Y/m/d H:i:s');
                     $alea = substr(strtoupper(md5(microtime(true))), 0, 12);
                     $type = 'jpg';
                     $rfoto = $_FILES['picture']['tmp_name'];
-                    
+
                     if (is_uploaded_file($rfoto)) {
-                        
-                        $name = $_SESSION['email'] .$alea. "." . $type;
+
+                        $name = $_SESSION['email'] . $alea . "." . $type;
                         $destino = "images/" . $name;
                         copy($rfoto, $destino);
-                    
                     } else {
 
                         $destino = '';
                     }
-                    
-                    $updateResult = $collectionUsers->updateOne(
-                    ['_id' =>  $_SESSION['email']],
-                    [
-                    '$push' => [ 'publications'  => 
-                    
-                        [ 'text' => $publication,'multimediaurl' => $destino,'coments' => '',
-                          'likes' => '0', 'datePublication' => date('Y/m/d H:i:s'),
-                          'typepublication' => 'post']
-                        
-                       ]
-                     
-                    ]
-                    );
-                    
+
+                    $updateResult = $collectionUsers->updateOne([
+                        '_id' => $_SESSION['email']
+                    ], [
+                        '$push' => [
+                            'publications' => 
+                            [
+                                'text' => $publication,
+                                'multimediaurl' => $destino,
+                                'coments' => '',
+                                'likes' => '0',
+                                'datePublication' => date('Y/m/d H:i:s'),
+                                'typepublication' => 'post'
+                            ]
+                        ]
+                    ]);
                 }
 
                 ?>            
@@ -202,13 +202,15 @@ if (! isset($_SESSION['email'])) {
 
 									<?php
 
-									$users = $collectionUsers->find([ '_id' => $_SESSION['email']]  );
-									
-									foreach ($users as $doc) {
-									    
-									    foreach ($doc['friends'] as $value) {
-									       
-            ?>
+        $users = $collectionUsers->find([
+            '_id' => $_SESSION['email']
+        ]);
+
+        foreach ($users as $doc) {
+
+            foreach ($doc['friends'] as $value) {
+
+                ?>
 									<li class="item">
 										<div class="product-img">
 											<img src="<?php echo $value['avatar'];?>" alt="Friends">
@@ -224,29 +226,19 @@ if (! isset($_SESSION['email'])) {
                 <?php }} ?>
 
 
-              
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								</ul>
+              				</ul>
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer text-center">
-                           <a href="javascript:void(0)" class="uppercase">Get New Friends</a>
-              
-            </div>
+								<a href="javascript:void(0)" class="uppercase">Get New Friends</a>
+
+							</div>
 							<!-- /.box-footer -->
 						</div>
 						<!-- /.box -->
 					</div>
 					<!-- /.col -->
-				
+
 					<!-- /.col -->
 
 

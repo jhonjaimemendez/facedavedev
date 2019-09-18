@@ -11,27 +11,26 @@ $(document).ready(function() {
 
         var getpID =  $(this).parent().attr('id').replace('record-','');
 
-        var usuario = $("input#usuario").val();
-        var comentario = $("#comentario-"+getpID).val();
-        var publicacion = getpID;
+        var user = $("input#user").val();
         var avatar = $("input#avatar").val();
-        var nombre = $("input#nombre").val();
+        var comment = $("#comment-"+getpID).val();
+        var publication = getpID;
         var now = new Date();
         var date_show = now.getDate() + '-' + now.getMonth() + '-' + now.getFullYear() + ' ' + now.getHours() + ':' + + now.getMinutes() + ':' + + now.getSeconds();
 
         if (comentario == '') {
-            alert('Debes añadir un comentario');
+            alert('You must add a comment');
             return false;
         }
 
-        var dataString = 'usuario=' + usuario + '&comentario=' + comentario + '&publicacion=' + publicacion;
+        var dataString = 'user=' + user + '&comment=' + comment + '&publication=' + publication;
 
         $.ajax({
                 type: "POST",
-                url: "agregarcomentario.php",
+                url: "addcomment.php",
                 data: dataString,
                 success: function() {
-                    $('#nuevocomentario'+getpID).append('<div class="box-comment"><img class="img-circle img-sm" src="avatars/'+ avatar +'"><div class="comment-text"><span class="username"> '+ nombre +'<span class="text-muted pull-right">' + date_show + '</span></span>' + comentario + '</div></div>');
+                    $('#newcomment'+getpID).append('<div class="box-comment"><img class="img-circle img-sm" src="'+ avatar +'"><div class="comment-text"><span class="username"> '+ nombre +'<span class="text-muted pull-right">' + date_show + '</span></span>' + comment + '</div></div>');
                 }
         });
         return false;
@@ -43,23 +42,25 @@ $(document).ready(function() {
 
 <?php
 
-    $numRowsShow=5;
+    $numRows = 0;
     
-    $compag         =(int)(!isset($_GET['pag'])) ? 1 : $_GET['pag'];
-    
+    $compag   = (int)(!isset($_GET['pag'])) ? 1 : $_GET['pag'];
     
     $cursor = $collectionUsers->find([]);
     
     foreach ($cursor  as $doc) {
         
         foreach($doc['publications'] as $key => $value) {
-            
+            $idPublications = $value['_id'];
             $datePublications = $value['datePublication'];
             $multimediaurl = $value['multimediaurl'];
             $text  = $value['text'];
             $likes = $value['likes'];
             $nolikes = '0';
             $numComment =  '0';
+            $numRows = 0;
+            
+            
         	?>
 	<!-- START PUBLICACIONES -->
           <!-- Box Comment -->
@@ -152,12 +153,11 @@ $(document).ready(function() {
               <div id="nuevocomentario<?php  #echo $lista['id_pub'];?>"></div>
               <br>
                 <form method="post" action="">
-                <label id="record-<?php  #echo $lista['id_pub'];?>">
-                <input type="text" class="enviar-btn form-control input-sm" style="width: 700px;" placeholder="Write a comment" name="comentario" id="comentario-<?php  #echo $lista['id_pub'];?>">
-                <input type="hidden" name="usuario" value="<?php #echo $_SESSION['id'];?>" id="usuario">
-                <input type="hidden" name="publicacion" value="<?php #echo $lista['id_pub'];?>" id="publicacion">
-                <input type="hidden" name="avatar" value="<?php #echo $_SESSION['avatar'];?>" id="avatar">
-                <input type="hidden" name="nombre" value="<?php #echo $_SESSION['usuario'];?>" id="nombre">
+                <label id="record-<?php   echo $idPublications; ?>">
+                <input type="text" class="enviar-btn form-control input-sm" style="width: 700px;" placeholder="Write a comment" name="comment" id="coment-<?php  echo  $idPublications;?>">
+                <input type="hidden" name="user" value="<?php $_SESSION['email'];?>" id="user">
+                <input type="hidden" name="publicationId" value="<?php echo $idPublications;?>" id="publicationId">
+                <input type="hidden" name="avatar" value="<?php $_SESSION['avatars'];?>" id="avatar">
                 </form>
 
               </div>
