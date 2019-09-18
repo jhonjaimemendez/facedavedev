@@ -15,7 +15,7 @@ if(!isset($_SESSION['email']))
   if(isset($_GET['id']))
   {
   $id = $_GET['id'];
-  $pag = $_GET['perfil'];
+  $request = $_GET['request'];
  
   $users = $collectionUsers->find([ '_id' => $id] );
   
@@ -27,8 +27,6 @@ if(!isset($_SESSION['email']))
       
       
   }
-  
-  echo 'profilePicture'. $avatar;
   
   ?>
 <!DOCTYPE html>
@@ -109,14 +107,21 @@ if(!isset($_SESSION['email']))
               
               <form action="" method="post">
               
-              	<input type="submit" class="btn btn-primary btn-block" name="follow" value="Send friend request">
-            
+              <?php if (empty($request)) {
+              	
+                       echo '<input type="submit" class="btn btn-primary btn-block" name="follow" value="Send friend request">';
+                   
+                   } else {
+                       
+                       echo '<input type="submit" class="btn btn-primary btn-block" name="accept" value="Accept request">';
+                       echo '<input type="submit" class="btn btn-danger btn-block" name="reject" value="Reject request">';
+                   }
+               ?>
               </form>
               
               <?php
               if(isset($_POST['follow'])) {
-                
-                  echo 'follow';
+                  
                   $updateResult = $collectionUsers->updateOne(
                       ['_id' =>  $id],
                       [
@@ -129,9 +134,37 @@ if(!isset($_SESSION['email']))
                           ]
                           
                       ]);
-                  echo 'follow';
-                  //echo '<script>window.location="perfil.php?id='.$id.'"</script>';
-               }
+                  
+              } elseif (isset($_POST['accept'])) {
+                  
+                  $updateResult = $collectionUsers->updateOne(
+                      ['_id' =>  $id],
+                      [
+                          '$push' => [ 'friends'  =>
+                              
+                              [ 'user' => $_SESSION['email']
+                                  
+                              ]
+                              
+                          ]
+                          
+                      ]);
+                  
+                  $updateResult = $collectionUsers->updateOne(
+                      ['_id' =>  $_SESSION['email'],'notifications.user' => $id],
+                      [
+                          '$set' => [ 'notifications.read'  => '1'
+                                    ]
+                          
+                      ]
+                      );
+                  
+               
+              }
+              
+              if ($updateResult) {
+                  echo "<script type='text/javascript'>window.location='wall.php';</script>";
+              }
               ?>
 
               

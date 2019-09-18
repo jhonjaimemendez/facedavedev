@@ -23,14 +23,6 @@ if (! empty($email) && ! empty($password)) {
         $_SESSION['avatars'] = $doc['profilePicture'];
         $_SESSION['memberyear'] = $doc['dateRegistration'];
         
-     
-       /* foreach($doc['publications'] as $key => $value) {
-            
-            $friends[$key] = array($value['user'],$value['gender']);
-                
-        }
-        
-        /*$_SESSION['friends'] = $friends;*/
         
     }
     

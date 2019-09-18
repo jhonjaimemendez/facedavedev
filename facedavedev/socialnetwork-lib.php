@@ -32,8 +32,9 @@ function Headerb ()
                    
                    foreach ($doc['notifications'] as $key => $value) {
                         
+                       
+                       $notifications[] = $value['user'];
                        $numrownotification = $numrownotification + 1;
-                       $notifications[$key] = array($value['text'],$value['user']);
                        
                    }
                }
@@ -53,27 +54,17 @@ function Headerb ()
                 <ul class="menu">
 
                 <?php                
-                  /*  foreach ($publications as $doc) {
-                        echo   'publications';
-                        $userid = $doc['user'];
-                        $type = $doc['typepublication'];
+                    foreach ($notifications as $value) {
                         
-                        $users = $collectionUsers->find( [ '_id' => $userid ] );
-                        
-
-                        foreach ($users as $doc1) {
-                            
-                            $names = $doc1['names'].' '. $doc1['surname'];
-                        }   */     
                   ?>
 
                   <li>
-                    <a href="publication.php?id=<?php #echo $names; ?>">
-                      <i class="fa fa-users text-aqua"></i> The users <?php #echo $names; ?> <?php #echo $type; ?> your post
+                    <a href="profile.php?id=<?php echo $value; ?>&request=yes">
+                      <i class="fa fa-users text-aqua"></i> The users <?php echo $value;  ?>  sent you a friend request
                     </a>
                   </li>
 
-                <?php #} ?>
+                <?php } ?>
 
 
                 </ul>

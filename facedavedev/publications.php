@@ -58,7 +58,6 @@ $(document).ready(function() {
    
   
     foreach ($cursor  as $doc) {
-        echo 'publications publications';
         
         foreach($doc['publications'] as $key => $value) {
             
@@ -74,7 +73,7 @@ $(document).ready(function() {
           <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <img class="img-circle" src="avatars/<?php echo $doc['profilePicture']; ?>" alt="User Image">
+                <img class="img-circle" src="<?php echo $doc['profilePicture']; ?>" alt="User Image">
                 <span class="description" onclick="location.href='profile.php?id=<?php echo $doc['_id'];?>';" style="cursor:pointer; color: #3C8DBC;""><?php echo $doc['names'];?></span>
                 <span class="description"><?php echo $datePublications;?></span>
                </div>
@@ -138,7 +137,7 @@ $(document).ready(function() {
 
               <div class="box-comment">
                 <!-- User image -->
-                <img class="img-circle img-sm" src="avatars/<?php #echo $usec['avatar'];?>">
+                <img class="img-circle img-sm" src="<?php echo $doc['profilePicture'];?>">
 
                 <div class="comment-text">
                       <span class="username">
@@ -154,14 +153,14 @@ $(document).ready(function() {
 
               <?php #if ($numcomen > 2) { ?> 
               <br>
-                <center><span onclick="location.href='publicacion.php?id=<?php #echo $lista['id_pub'];?>';" style="cursor:pointer; color: #3C8DBC;">Ver todos los comentarios</span></center>
-              <?php } } ?>
+                <center><span onclick="location.href='publicacion.php?id=<?php #echo $lista['id_pub'];?>';" style="cursor:pointer; color: #3C8DBC;">See all comments</span></center>
+              <?php #}  ?>
 
               <div id="nuevocomentario<?php  #echo $lista['id_pub'];?>"></div>
               <br>
                 <form method="post" action="">
                 <label id="record-<?php  #echo $lista['id_pub'];?>">
-                <input type="text" class="enviar-btn form-control input-sm" style="width: 800px;" placeholder="Escribe un comentario" name="comentario" id="comentario-<?php  echo $lista['id_pub'];?>">
+                <input type="text" class="enviar-btn form-control input-sm" style="width: 700px;" placeholder="Write a comment" name="comentario" id="comentario-<?php  #echo $lista['id_pub'];?>">
                 <input type="hidden" name="usuario" value="<?php #echo $_SESSION['id'];?>" id="usuario">
                 <input type="hidden" name="publicacion" value="<?php #echo $lista['id_pub'];?>" id="publicacion">
                 <input type="hidden" name="avatar" value="<?php #echo $_SESSION['avatar'];?>" id="avatar">
@@ -177,7 +176,7 @@ $(document).ready(function() {
     <br><br>
 
 	<?php
-	#}
+        }}
 	//Validmos el incrementador par que no genere error
 	//de consulta.  
     if($IncrimentNum<=0){}else {
