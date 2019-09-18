@@ -21,21 +21,21 @@ function Headerb ()
             
            <?php
                 include 'config.php';
-                
+               
                 $numrownotification = 0;
                
-               $cursor = $collectionUsers->find(['_id' => $_SESSION['email'],
-                                                 'notifications.read' => '0']);
+                $cursor = $collectionUsers->find(['_id' =>  $_SESSION['email'],
+                    'notifications.read' =>  '0']);
+                
                $notifications = array();
                
                foreach ($cursor as $doc) {
-                   
+               
                    foreach ($doc['notifications'] as $key => $value) {
-                        
-                       
+               
                        $notifications[] = $value['user'];
                        $numrownotification = $numrownotification + 1;
-                       
+               
                    }
                }
                
@@ -130,6 +130,7 @@ function Headerb ()
 function Side ()
 
 {
+    
 ?>
 <!-- START LEFT SIDE -->
 <!-- Left side column. contains the logo and sidebar -->
@@ -163,32 +164,47 @@ function Side ()
         <li>
           <a href="index.php">
             <i class="fa fa-dashboard"></i> <span>News</span>
-          </a>
-        </li>
-        <li>
-          <a href="mensajes.php">
-            <i class="fa fa-comment"></i> <span>Chat</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">1</small>
+              <small class="label pull-right bg-green">0</small>
             </span>
           </a>
         </li>
+      
         <li>
           <a href="index.php">
             <i class="fa fa-user"></i> <span>My Followers</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green"><?php  
+              
+              include 'config.php';
+              
+              $numFollowers = 0;
+              
+              $cursor = $collectionUsers->find(['friends.user' => $_SESSION['email']]);
+              
+              foreach ($cursor  as $doc) {
+              
+                $numFollowers  = $numFollowers +1 ;
+              }
+              
+              echo $numFollowers; ?></small>
+            </span>
           </a>
         </li>
         <li>
           <a href="index.php">
             <i class="fa fa-arrow-right"></i> <span>Followed</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green"><?php  echo $_SESSION['numFriend']; ?> </small>
+              <small class="label pull-right bg-green"><?php  echo $_SESSION['numFriends']; ?> </small>
             </span>
           </a>
         </li>
         <li>
           <a href="index.php">
             <i class="fa fa-heart"></i> <span>I like it</span>
+             <span class="pull-right-container">
+              <small class="label pull-right bg-green">0</small>
+            </span>
           </a>
         </li>
           </ul>

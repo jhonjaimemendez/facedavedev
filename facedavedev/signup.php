@@ -36,18 +36,6 @@
   $_SESSION['birthdate'] = $birthdate;
   $_SESSION['password']  = $password;
   
-  /**
-   *  'publications'  => [
-
-                    ['user' => '14', 'multimediaurl' => 'cm','coments' => 'cm',
-                    'likes' => 'cm', 'date' => 'cm',
-                    'read' => '0','typepublication' => 'cm']
-            ],
-       'friends'  => [
-
-           ['user' => '14', 'date' => '21', 'gender' => '21',
-            'status' => 'cm']
-           ]
-   */
+ 
   header('Location: wall.php');
 ?>

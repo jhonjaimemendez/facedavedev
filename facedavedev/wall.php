@@ -194,7 +194,7 @@ if (! isset($_SESSION['email'])) {
 
 						<div class="box box-primary">
 							<div class="box-header with-border">
-								<h3 class="box-title">Friend requests</h3>
+								<h3 class="box-title">My Friends</h3>
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -202,38 +202,26 @@ if (! isset($_SESSION['email'])) {
 
 									<?php
 
-        foreach ($_SESSION['friends'] as $value) {
-
-            $friends[$key] = $value;
-
-            /*
-             * $amistade = mysql_query("SELECT * FROM amigos WHERE para = '" . $_SESSION['id'] . "' AND estado = '0' order by id_ami desc LIMIT 4");
-             * while ($am = mysql_fetch_array($amistade)) {
-             *
-             * $use = mysql_query("SELECT * FROM usuarios WHERE id_use = '" . $am['de'] . "'");
-             * $us = mysql_fetch_array($use);
-             */
+									$users = $collectionUsers->find([ '_id' => $_SESSION['email']]  );
+									
+									foreach ($users as $doc) {
+									    
+									    foreach ($doc['friends'] as $value) {
+									       
             ?>
 									<li class="item">
 										<div class="product-img">
-											<img src="images/avatar.png; ?>" alt="Product Image">
+											<img src="<?php echo $value['avatar'];?>" alt="Friends">
 										</div>
 										<div class="product-info">
-											<!--   <?php echo $value[0]; ?>
-                      <a
-												href="solicitud.php?action=aceptar&id=<?php #echo $am['id_ami']; ?>"><span
-												class="label label-success pull-right">Aceptar</span></a> <br>
-											<a
-												href="solicitud.php?action=rechazar&id=<?php #echo $am['id_ami']; ?>"><span
-												class="label label-danger pull-right">Rechazar</span></a> <span
-												class="product-description">
-												<?php echo $value[1]; ?>
-                        </span>
+											   <?php echo $value['name']; ?>
+                      						
+                      
 										</div>
 									</li>
 									<!-- /.item -->
 
-                <?php } ?>
+                <?php }} ?>
 
 
               
@@ -250,50 +238,15 @@ if (! isset($_SESSION['email'])) {
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer text-center">
-              <?php
-
-            // if(mysql_num_rows($amistade) > 4) { ?>
-              <a href="javascript:void(0)" class="uppercase">See all the
-									requests</a>
-              <?php #} ?> 
+                           <a href="javascript:void(0)" class="uppercase">Get New Friends</a>
+              
             </div>
 							<!-- /.box-footer -->
 						</div>
 						<!-- /.box -->
 					</div>
 					<!-- /.col -->
-
-
-					<div class="col-md-4">
-						<!-- USERS LIST -->
-						<div class="box box-danger">
-							<div class="box-header with-border">
-								<h3 class="box-title">Last Registered</h3>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body no-padding">
-								<ul class="users-list clearfix">
-                  <?php
-
-                // while ($reg = mysql_fetch_array($registrados)) {
-                // ?>
-   <!--                 <li><img src="avatars/<?php echo $_SESSION['avatars']; ?>"
-										alt="User Image" width="100" height="200"> <a
-										class="users-list-name" href="#">#<?php  echo $_SESSION['avatars'];?></a>
-                }
-								<!-- /.users-list -->
-									<span class="users-list-date">Today</span>
-									</li>  -->
-                  <?php
-                // $registrados = mysql_query("SELECT avatar,usuario,fecha_reg FROM usuarios order by id_use desc limit 8");
-                ?>
-
-                  </ul>
-							</div>
-							<!-- /.box-footer -->
-						</div>
-						<!--/.box -->
-					</div>
+				
 					<!-- /.col -->
 
 

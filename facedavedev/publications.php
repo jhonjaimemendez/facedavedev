@@ -47,16 +47,9 @@ $(document).ready(function() {
     
     $compag         =(int)(!isset($_GET['pag'])) ? 1 : $_GET['pag'];
     
-    $cursor = $collectionUsers->find(['$or' => 
-                                     [
-                                        ['_id' => $_SESSION['email']],
-                                        ['friends' => ['user' => $_SESSION['email']]]
-                                     ],
-     ]);
     
+    $cursor = $collectionUsers->find([]);
     
-   
-  
     foreach ($cursor  as $doc) {
         
         foreach($doc['publications'] as $key => $value) {
