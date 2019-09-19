@@ -154,6 +154,7 @@ if (empty($request)) {
             '$push' => [
                 'friends' => 
                 [
+                    '_id'=> new MongoDB\BSON\ObjectId(),
                     'user' => $_SESSION['email'],
                     'name' => $_SESSION['names'],
                     'surname' => $_SESSION['surname'],

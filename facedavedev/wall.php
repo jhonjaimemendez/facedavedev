@@ -140,22 +140,29 @@ if (! isset($_SESSION['email'])) {
                         $destino = '';
                     }
 
+                    $idGenerate = new MongoDB\BSON\ObjectId();
+                    
                     $updateResult = $collectionUsers->updateOne([
                         '_id' => $_SESSION['email']
                     ], [
                         '$push' => [
                             'publications' => 
                             [
+                                '_id'=> $idGenerate,
                                 'text' => $publication,
                                 'multimediaurl' => $destino,
                                 'coments' => '',
                                 'likes' => '0',
+                                'nolikes' => '0',
                                 'datePublication' => date('Y/m/d H:i:s'),
                                 'typepublication' => 'post'
                             ]
                         ]
                     ]);
                 }
+                
+                unset($_POST['post']);
+                header('Location: wall.php');
 
                 ?>            
                 </div>
