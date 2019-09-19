@@ -101,11 +101,11 @@
 
 					<div class="formbox">
 
-						<div class="formbox mt1">
+						<div class="formbox mt1" >
 							<span data-type="radio" class="spanpad"> <input type="radio"
-								id="fem" class="m0" name="gender" value="F"> <label for="fem"
+								id="fem" class="m0" name="gender" value="F" required> <label for="fem"
 								class="gender">Female </label> <input type="radio" id="male"
-								class="m0" name="gender" value="M"> <label for="male"
+								class="m0" name="gender" value="M" required> <label for="male"
 								class="gender">Male </label>
 							</span>
 						</div>
@@ -115,7 +115,7 @@
 						</div>
 
 						<span data-type="selectors"> <span> <select title="Month"
-								class="selectbody" name="month"><option value="0" selected="1">Month</option>
+								class="selectbody" name="month" required><option value="0" selected="1">Month</option>
 									<option value="1">Jan</option>
 									<option value="2">Feb</option>
 									<option value="3">Mar</option>
@@ -128,7 +128,7 @@
 									<option value="10">Oct</option>
 									<option value="11">Nov</option>
 									<option value="12">Dec</option></select> <select title="Day"
-								class="selectbody fl" name="day"><option value="0" selected="1">Day</option>
+								class="selectbody fl" name="day" required><option value="0" selected="1">Day</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
@@ -160,7 +160,7 @@
 									<option value="29">29</option>
 									<option value="30">30</option>
 									<option value="31">31</option></select> <select title="Year"
-								class="selectbody fl" name="year"><option value="0" selected="1">Year</option>
+								class="selectbody fl" name="year"> required<option value="0" selected="1">Year</option>
 									<option value="2015">2015</option>
 									<option value="2014">2014</option>
 									<option value="2013">2013</option>

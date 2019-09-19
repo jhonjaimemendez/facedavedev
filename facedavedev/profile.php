@@ -71,7 +71,7 @@ if (isset($_GET['id'])) {
 
   <?php
 
-echo Side();
+    echo Side();
 
     ?>
 
@@ -113,7 +113,7 @@ echo Side();
               
               <?php
 
-if (empty($request)) {
+    if (empty($request)) {
 
         echo '<input type="submit" class="btn btn-primary btn-block" name="follow" value="Send friend request">';
     } else {
@@ -126,35 +126,30 @@ if (empty($request)) {
               
               <?php
     if (isset($_POST['follow'])) {
-
-        if ( $id != $_SESSION['email']) {
-            
+        
+        if ($id != $_SESSION['email']) {
             $updateResult = $collectionUsers->updateOne([
                 '_id' => $id
             ], [
                 '$push' => [
-                    'notifications' => 
-    
-                        [
-                            'user' => $_SESSION['email'],
-                            'read' => '0'
-                        ]
-                    
+                    'notifications' => [
+                        'user' => $_SESSION['email'],
+                        'read' => '0'
+                    ]
                 ]
             ]);
         }
-        
+
         echo "<script type='text/javascript'>window.location='wall.php';</script>";
-        
+
     } elseif (isset($_POST['accept'])) {
 
         $updateResult = $collectionUsers->updateOne([
             '_id' => $id
         ], [
             '$push' => [
-                'friends' => 
-                [
-                    '_id'=> new MongoDB\BSON\ObjectId(),
+                'friends' => [
+                    '_id' => new MongoDB\BSON\ObjectId(),
                     'user' => $_SESSION['email'],
                     'name' => $_SESSION['names'],
                     'surname' => $_SESSION['surname'],
@@ -164,20 +159,44 @@ if (empty($request)) {
             ]
         ]);
 
+        $users = $collectionUsers->find([
+            '_id' => $email
+        ]);
+
+        foreach ($users as $doc) {
+
+            $names = $doc['names'];
+            $surname = $doc['surname'];
+            $gender = $doc['gender'];
+            $avatars = $doc['profilePicture'];
+        }
+
+        $updateResult = $collectionUsers->updateOne([
+            '_id' => $_SESSION['email']
+        ], [
+            '$push' => [
+                'friends' => [
+                    '_id' => new MongoDB\BSON\ObjectId(),
+                    'user' => $id,
+                    'name' => $names,
+                    'surname' => $surname,
+                    'gender' => $gender,
+                    'avatar' => $avatars
+                ]
+            ]
+        ]);
+
         $updateResult = $collectionUsers->updateOne([
             '_id' => $_SESSION['email'],
             'notifications.user' => $id
         ], [
-            '$set' => [
-                'notifications' => [
-                    'user' => $id,
-                    'read' => '1'
-                ]
-            ]
-        ]);
-        
+            
+            '$set' => ['otifications.read' => '1'],
+            '$currentDate' => ['lastModified' => true],
+           ]   
+        );
+
         echo "<script type='text/javascript'>window.location='wall.php';</script>";
-        
     } elseif (isset($_POST['reject'])) {
 
         $updateResult = $collectionUsers->updateOne([
@@ -191,13 +210,10 @@ if (empty($request)) {
                 ]
             ]
         ]);
-        
+
         echo "<script type='text/javascript'>window.location='wall.php';</script>";
     }
 
-    
-      
-    
     ?>
 
               
