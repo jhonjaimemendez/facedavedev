@@ -46,7 +46,7 @@ if (! isset($_SESSION['email'])) {
              if (key==9) return true;
              if (key==11) return true;
 
-             patron = /[A-Za-zÃ±!#$%&()=?Â¿Â¡*+0-9-_Ã¡-ÃºÃ�-Ãš :;,.]/;
+             patron = /[A-Za-zñ!#$%&()=?¿¡*+0-9-_á-úÁ-Ú :;,.]/;
          
              te = String.fromCharCode(key);
             

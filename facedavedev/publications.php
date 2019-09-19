@@ -27,6 +27,7 @@ include 'config.php';
                 data: dataString,
                 success: function() {
                     $('#newcomment'+idpublications).append('<div class="box-comment"><img class="img-circle img-sm" src="'+ avatar +'"><div class="comment-text"><span class="username"> '+ user +'<span class="text-muted pull-right">' + date_show + '</span></span>' + comment + '</div></div>');
+                    document.getElementById("comment-" + idpublications).value = '';
                 }
         });
         return false;
@@ -134,7 +135,7 @@ foreach ($cursor as $doc) {
             <?php
         
         $comments = $collectionUsers->find([
-            
+            '_id' => $id,
             'comments.publication' => $idPublications
         ]);
         
@@ -144,12 +145,17 @@ foreach ($cursor as $doc) {
         ?>
              <div class="box-footer box-comments">
              <?php
+             
+             $sw = false;
         foreach ($comments as $doc1) {
 
+            
             $listComment = $doc1['comments'];
 
             foreach ($listComment as $key2 => $value2) {
-                echo $value2['publication'].$idPublications;
+                
+                if ($value2['publication'] == $idPublications) {
+                    $sw = true;
                 ?>
 
 
@@ -168,16 +174,16 @@ foreach ($cursor as $doc) {
 			<!-- /.comment-text -->
 		</div>
 		<!-- /.box-comment -->
-              <?php }} ?>
+              <?php }}} ?>
 
-              <?php #if (!empty($comments)) { ?> 
+              <?php if ($sw) {  ?> 
               <br>
 		<center>
 			<span
 				onclick="location.href='publicacion.php?id=<?php #echo $lista['id_pub'];?>';"
 				style="cursor: pointer; color: #3C8DBC;">See all comments</span>
 		</center>
-              <?php #}  ?>
+              <?php }  ?>
 
               <div id="newcomment<?php  echo $idPublications;?>"></div>
 		<br>
