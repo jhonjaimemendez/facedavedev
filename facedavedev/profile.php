@@ -193,10 +193,10 @@ if (isset($_GET['id'])) {
             'notifications.user' => $id
         ], [
             '$set' => [
-                'notifications' => [
+                'notifications' => [[
                     'user' => $id,
                     'read' => '1'
-                ]
+                ]]
             ]
         ]);
         
@@ -211,11 +211,11 @@ if (isset($_GET['id'])) {
             'notifications.user' => $id
         ], [
             '$set' => [
-                'notifications' => [
+                'notifications' => [[
                     'user' => $id,
                     'read' => '2'
                 ]
-            ]
+            ]]
         ]);
 
         echo "<script type='text/javascript'>window.location='wall.php';</script>";

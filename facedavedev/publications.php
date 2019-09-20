@@ -42,7 +42,9 @@ $numRows = 0;
 
 $compag = (int) (! isset($_GET['pag'])) ? 1 : $_GET['pag'];
 
-$cursor = $collectionUsers->find([]);
+$options = ['sort' => ['publications.datePublication' => -1]];
+
+$cursor = $collectionUsers->find([],$options);
 
 foreach ($cursor as $doc) {
 

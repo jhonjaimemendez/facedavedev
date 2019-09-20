@@ -1,6 +1,5 @@
 <?php
 
-    session_start();
     ini_set('error_reporting',0);
 ?>
 
