@@ -1,0 +1,21 @@
+1. Virtual Machine Configuration
+
+	The virtual machine is mounted on VirtualBox you just need to import it. If you need help let me 
+	know to send a video explaining the import.
+	
+	The virtual machine is mounted on Ubuntu 18 and has two users:
+	
+	a.  User: Dave
+	    Password: dave
+	
+	b. User: root
+	    Password: root
+	    
+	 The mongodb database engine has no password. 
+ 
+  
+ 
+ Application Access Tutorial
+ 
+ 	a. To access the application you must start the virtual machine.
+ 
