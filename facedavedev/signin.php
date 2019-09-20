@@ -12,7 +12,7 @@ if (! empty($email) && ! empty($password)) {
     $users = $collectionUsers->find([ '_id' => $email,'password' => $password ] );
     
     foreach ($users as $doc) {
-        echo "Wrong username or password".$email;
+        
         $_SESSION['email'] = $email;
         $_SESSION['names'] = $doc['names'].' '. $doc['surname'];
         $_SESSION['firstnames'] = $doc['names'];

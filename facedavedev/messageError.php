@@ -30,7 +30,7 @@
 	<div id="notfound">
 		<div class="notfound">
 			<div class="notfound-404">
-				<h1>Error Message</h1>
+				<h3>Error Message</h3>
 			</div>
 			<h2><?php 
 

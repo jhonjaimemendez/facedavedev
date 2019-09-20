@@ -159,16 +159,16 @@ if (isset($_GET['id'])) {
         
         $type = 'jpg';
         $rfoto = $_FILES['avatar']['tmp_name'];
-        $name = $id . '.' . $type;
+        $destino = $id . '.' . $type;
 
         
         if (is_uploaded_file($rfoto)) {
-            $destino = 'images/' . $name;
+            $destino = 'images/' . $destino;
             $_SESSION['avatars'] = $destino;
             copy($rfoto, $destino);
             
         } else {
-            $name = $_SESSION['avatars'];
+            $destino = $_SESSION['avatars'];
         }
 
         if ($birthdate == '') {
@@ -187,7 +187,8 @@ if (isset($_GET['id'])) {
                             'names'=>$names,
                             'surname'   => $surname,
                             'gender'  => $gender,
-                            'birthdate'  => $birthdate
+                            'birthdate'  => $birthdate,
+                            'profilePicture' => $destino
                            ]
                 
             ]

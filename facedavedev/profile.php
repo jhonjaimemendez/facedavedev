@@ -143,7 +143,7 @@ if (isset($_GET['id'])) {
         echo "<script type='text/javascript'>window.location='wall.php';</script>";
 
     } elseif (isset($_POST['accept'])) {
-
+        
         $updateResult = $collectionUsers->updateOne([
             '_id' => $id
         ], [
@@ -160,7 +160,7 @@ if (isset($_GET['id'])) {
         ]);
 
         $users = $collectionUsers->find([
-            '_id' => $email
+            '_id' => $id
         ]);
 
         foreach ($users as $doc) {
@@ -169,8 +169,10 @@ if (isset($_GET['id'])) {
             $surname = $doc['surname'];
             $gender = $doc['gender'];
             $avatars = $doc['profilePicture'];
+            
         }
 
+        
         $updateResult = $collectionUsers->updateOne([
             '_id' => $_SESSION['email']
         ], [
@@ -190,13 +192,18 @@ if (isset($_GET['id'])) {
             '_id' => $_SESSION['email'],
             'notifications.user' => $id
         ], [
-            
-            '$set' => ['otifications.read' => '1'],
-            '$currentDate' => ['lastModified' => true],
-           ]   
-        );
+            '$set' => [
+                'notifications' => [
+                    'user' => $id,
+                    'read' => '1'
+                ]
+            ]
+        ]);
+        
+        
 
         echo "<script type='text/javascript'>window.location='wall.php';</script>";
+        
     } elseif (isset($_POST['reject'])) {
 
         $updateResult = $collectionUsers->updateOne([

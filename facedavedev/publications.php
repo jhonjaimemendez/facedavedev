@@ -27,7 +27,7 @@ include 'config.php';
                 data: dataString,
                 success: function() {
                     $('#newcomment'+idpublications).append('<div class="box-comment"><img class="img-circle img-sm" src="'+ avatar +'"><div class="comment-text"><span class="username"> '+ user +'<span class="text-muted pull-right">' + date_show + '</span></span>' + comment + '</div></div>');
-                    document.getElementById("comment-" + idpublications).value = '';
+                    
                 }
         });
         return false;
@@ -47,7 +47,8 @@ $cursor = $collectionUsers->find([]);
 foreach ($cursor as $doc) {
 
     $id = $doc['_id'];
-
+    $avatarID = $doc['profilePicture'];
+  
     foreach ($doc['publications'] as $key => $value) {
 
         $idPublications = (string) $value['_id'];
@@ -133,9 +134,8 @@ foreach ($cursor as $doc) {
 	<!-- /.box-body -->
 	
             <?php
-        
+            
         $comments = $collectionUsers->find([
-            '_id' => $id,
             'comments.publication' => $idPublications
         ]);
         
@@ -151,17 +151,19 @@ foreach ($cursor as $doc) {
 
             
             $listComment = $doc1['comments'];
+            $avatar = $doc['profilePicture'];
 
             foreach ($listComment as $key2 => $value2) {
                 
                 if ($value2['publication'] == $idPublications) {
                     $sw = true;
+                    
                 ?>
 
 
               <div class="box-comment">
 			<!-- User image -->
-			<img class="img-circle img-sm" src="<?php echo $value2['avatar'];?>">
+			<img class="img-circle img-sm" src="<?php echo $avatar?>">
 
 			<div class="comment-text">
 				<span class="username">
@@ -194,7 +196,7 @@ foreach ($cursor as $doc) {
 				id="comment-<?php  echo  $idPublications;?>"> <input type="hidden"
 				name="user" value="<?php echo $_SESSION['email'];?>"
 				id="user-<?php  echo $idPublications;?>"> <input type="hidden"
-				name="avatar" value="<?php echo $_SESSION['avatars'];?>"
+				name="avatar" value="<?php echo  $_SESSION['avatars'];?>"
 				id="avatar-<?php  echo  $idPublications;?>">
 				<button style="width: 100px;" class="btn btn-danger btn-block" onclick="sendComment('<?php  echo  $idPublications;?>')">Send</button>
 				

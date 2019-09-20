@@ -173,7 +173,7 @@ if (! isset($_SESSION['email'])) {
         foreach ($users as $doc) {
 
             foreach ($doc['friends'] as $value) {
-
+                
                 ?>
 									<li class="item">
 										<div class="product-img">
